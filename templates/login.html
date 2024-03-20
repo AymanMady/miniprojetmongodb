@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="../static/login/style.css">
+
+<script src="../static/login/scripts.js"></script>
+<div class="container right-panel-active">
+    <div class="container__form container--signin">
+      <form action="{{ url_for('login') }}" method="post" class="form" id="form2">
+        <h2 class="form__title">Connexion</h2>
+        <input type="number" placeholder="NNI" class="input" name="nni" />
+        <input type="password" placeholder="Password" class="input"  name="password" />
+        <button type="submit" class="btn">Connexion</button>
+      </form>
+    </div>
+    <div class="container__overlay">
+      <div class="overlay" >
+         <img src="../static/election-mauritanie.webp" alt="" style="width: 50%;height: 100%;">
+      </div>
+    </div>
+</div>

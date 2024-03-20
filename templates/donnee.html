@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats des votes par candidat</title>
+</head>
+<body>
+    <h1>Résultats des votes par candidat</h1>
+
+    <h2>Nombre de votes par candidat :</h2>
+    <ul>
+        {% for candidat, votes in votes_par_candidat.items() %}
+            <li>Candidat {{ candidat }} : {{ votes }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Pourcentage de votes par candidat :</h2>
+    <ul>
+        {% for candidat, pourcentage in pourcentage_votes_par_candidat.items() %}
+            <li>Candidat {{ candidat }} : {{ pourcentage }}%</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Taux de participation :</h2>
+    <p>{{ taux_participation }}%</p>
+
+    <h2>Ordre des candidats :</h2>
+    <ol>
+        {% for candidat in candidats_tries %}
+            <li>Candidat {{ candidat[0] }}</li>
+        {% endfor %}
+    </ol>
+
+    <h2>Candidat gagnant :</h2>
+    <p>Candidat {{ candidat_gagnant }}</p>
+</body>
+</html>

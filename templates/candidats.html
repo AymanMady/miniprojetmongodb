@@ -1,0 +1,67 @@
+{% include 'navbar.html' %}
+
+
+<div class="row">
+
+  <div class="col-lg-12">
+
+      <div class="main-card mb-3 card">
+          <div class="card-body">
+            <div style="display: flex;justify-content:space-bettwin;width:100">
+              <h5 class="card-title">Candidats</h5>
+              <a class="btn btn-primary" href="/ajouter_candidat">Ajouter</a>
+            </div>
+              <table class="mb-0 table table-bordered">
+                  <thead>
+                      <tr>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">NNI</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">NOM</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">PRENOM</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">AGE</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">IMAGE</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">PARTIE</h6>
+                        </th>
+                        <th class="border-bottom-0" colspan="2">
+                          <h6 class="fw-semibold mb-0">Actions</h6>
+                        </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for candidat in candidats %}
+                    <tr>
+                      <td class="border-bottom-0">{{ candidat.NNI }}</td>
+                      <td class="border-bottom-0">{{ candidat.nom }}</td>
+                      <td class="border-bottom-0">{{ candidat.prenom }}</td>
+                      <td class="border-bottom-0">{{ candidat.age }}</td>
+                      <td class="border-bottom-0">{{ candidat.image }}</td>
+                      <td class="border-bottom-0">{{ candidat.parti }}</td>
+                      <td>
+                        <a class="btn btn-primary" href="/modifier_candidat/{{candidat.NNI}}">Modifier</a>
+                      </td>
+                      <td>
+                        <a class="btn btn-primary" href="/supprimer_candidat/{{candidat.NNI}}">Supprimer</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+</div>  
+</div>
+</div>
+</div>

@@ -1,0 +1,204 @@
+{% include 'navbar.html' %}
+
+
+    <div class="row">
+        <div class="col-md-6 col-xl-4">
+            <div class="card mb-3 widget-content bg-midnight-bloom">
+                <div class="widget-content-wrapper text-white">
+                    <div class="widget-content-left">
+                        <div class="widget-heading">Total candidats</div>
+                        <div class="widget-subheading"> </div>
+                    </div>
+                    <div class="widget-content-right">
+                        <div class="widget-numbers text-white"><span>{{ nombre_total_candidats }}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card mb-3 widget-content bg-arielle-smile">
+                <div class="widget-content-wrapper text-white">
+                    <div class="widget-content-left">
+                        <div class="widget-heading">Total électeurs</div>
+                        <div class="widget-subheading"></div>
+                    </div>
+                    <div class="widget-content-right">
+                        <div class="widget-numbers text-white"><span>{{ nombre_total_electeurs }}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card mb-3 widget-content bg-grow-early">
+                <div class="widget-content-wrapper text-white">
+                    <div class="widget-content-left">
+                        <div class="widget-heading">Taux de participation</div>
+                        <div class="widget-subheading"></div>
+                    </div>
+                    <div class="widget-content-right">
+                        <div class="widget-numbers text-white"><span>{{ taux_participation }}%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-6">
+            <div class="mb-3 card">
+                <div class="card-header-tab card-header-tab-animation card-header">
+                    <div class="card-header-title">
+                        <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                        
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tabs-eg-77">
+                            <div class="card mb-3 widget-chart widget-chart2 text-left w-100">
+                                <div class="widget-chat-wrapper-outer">
+                                    <div class="widget-chart-wrapper widget-chart-wrapper-lg opacity-10 m-0">
+                                        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-6">
+            <div class="mb-3 card">
+                <div class="card-header-tab card-header-tab-animation card-header">
+                    <div class="card-header-title">
+                        <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                        
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tabs-eg-77">
+                            <div class="card mb-3 widget-chart widget-chart2 text-left w-100">
+                                <div class="widget-chat-wrapper-outer">
+                                    <div class="widget-chart-wrapper widget-chart-wrapper-lg opacity-10 m-0">
+                                        <div id="chartContainerbar" style="height: 300px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="card-header">Ordre des candidats :
+                </div>
+                <div class="table-responsive">
+                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Nom</th>
+                                <th class="text-center">Partie</th>
+                                <th class="text-center">Nombre des votes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for candidat, info in candidats_tries %}
+                            <tr>
+                                <td class="text-center text-muted"></td>
+                                <td>
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left mr-3">
+                                                <div class="widget-content-left">
+                                                    <img width="40" class="rounded-circle" src="{{ info['image'] }}"
+                                                        alt="">
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left flex2">
+                                                <div class="widget-heading">{{ candidat }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{ info['parti'] }}</td>
+                                <td class="text-center">
+                                    <div class="badge badge-warning">{{ info['nombre_votes'] }}</div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            // Création des données pour le graphique circulaire (pie chart)
+            var pieDataPoints = [];
+            {% for candidat, pourcentage in pourcentage_votes_par_candidat.items() %}
+            pieDataPoints.push({ y: {{ pourcentage }}, name: "{{ candidat }}", exploded: true });
+            {% endfor %}
+
+            // Création des données pour le graphique à colonnes (column chart)
+            var columnDataPoints = [];
+            {% for candidat, votes in votes_par_candidat.items() %}
+            columnDataPoints.push({ label: "{{ candidat }}", y: {{ votes['nombre_votes'] }} });
+            {% endfor %}
+
+            // Création du graphique circulaire (pie chart)
+            var pieChart = new CanvasJS.Chart("chartContainer", {
+                exportEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: "Répartition des votes par candidat "
+                },
+                legend: {
+                    cursor: "pointer",
+                    itemclick: explodePie
+                },
+                data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    toolTipContent: "{name}: <strong>{y}%</strong>",
+                    indexLabel: "{name} - {y}%",
+                    dataPoints: pieDataPoints
+                }]
+            });
+
+            // Création du graphique à colonnes (column chart)
+            var columnChart = new CanvasJS.Chart("chartContainerbar", {
+                theme: "light1",
+                animationEnabled: false,
+                title: {
+                    text: "Répartition des votes par candidat "
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: columnDataPoints
+                }]
+            });
+
+            // Rendu des deux graphiques
+            pieChart.render();
+            columnChart.render();
+        }
+
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+        }
+    </script>
+
+    <script src="../static/canvasjs.min.js"></script>
+

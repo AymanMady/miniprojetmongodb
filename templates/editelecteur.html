@@ -1,0 +1,48 @@
+
+{% include 'navbar.html' %}
+
+
+
+
+<div class="tab-content">
+  <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+      <div class="main-card mb-3 card">
+          <div class="card-body"><h5 class="card-title">Modifier electeur</h5>
+            <form action="/modifier_electeur/<nni>" method="POST" enctype="multipart/form-data" id="addelecteurForm">
+              <div class="form-row">
+                  <div class="col-md-6">
+                      <div class="position-relative form-group"><label for="exampleEmail11" class="">Nom</label><input  id="nom" name="nom"  type="text" class="form-control" value="{{electeur.nom}}"></div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="position-relative form-group"><label for="examplePassword11" class="">Prenom</label><input id="prenom" name="prenom" placeholder="" type="text" class="form-control" value="{{electeur.prenom}}"></div>
+                  </div>
+                  </div>
+                  <div class="form-row">
+                      <div class="col-md-8">
+                          <div class="position-relative form-group"><label for="exampleCity" class="">NII</label><input  id="NNI" name="NNI" type="number" class="form-control" value="{{electeur.NNI}}"></div>
+                      </div>
+                    
+                      <div class="col-md-4">
+                          <div class="position-relative form-group"><label for="exampleZip" class="">Age</label><input id="age" name="age" type="number" class="form-control" value="{{electeur.age}}"></div>
+                          <div id="ageError" class="text-danger" style="display: none;">L'âge du electeur ne doit pas être inférieur à 18.</div>
+                      </div>
+                  </div>
+                  <button type="submit" class="mt-2 btn btn-primary">Ajouter</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('addelecteurForm').addEventListener('submit', function(event) {
+    var ageInput = document.getElementById('age');
+    var ageError = document.getElementById('ageError');
+    if (parseInt(ageInput.value) < 18) {
+      ageError.style.display = 'block';
+      event.preventDefault(); // Empêche l'envoi du formulaire si l'âge est inférieur à 38
+    } else {
+      ageError.style.display = 'none';
+    }
+  });
+</script>
